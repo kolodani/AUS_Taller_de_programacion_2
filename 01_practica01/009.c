@@ -5,7 +5,6 @@
 
 // Librerias
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 typedef enum { MAYUSCULAS, MINUSCULAS } may_min;
