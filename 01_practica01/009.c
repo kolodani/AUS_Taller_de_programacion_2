@@ -37,8 +37,7 @@ int main()
     strCopia(result, text1);
     printf("Copia: [%s]\n", result);
     strIzq(result, text1);
-    printf("Sin blancos a la Izq:");
-    puts(result);
+    printf("Sin blancos a la Izq: [%s]\n", result);
     strDer(result, text1);
     printf("Der: [%s]\n", result);
     strAmbos(result, text1);
@@ -162,11 +161,11 @@ void strAmbos(char *destino, const char *origen)
         j++; // incremento el contador
     }
     i--; // decremento el contador para que no cuente el caracter nulo
-    while (destino[i] == ' ') // recorro la cadena hasta que no encuentre un espacio en blanco
+    while (destino[i] != ' ') // recorro la cadena hasta que no encuentre un espacio en blanco
     {
         i--; // decremento el contador
     }
-    destino[i + 1] = '\0'; // agrego el caracter nulo al final de la cadena
+    destino[i] = '\0'; // agrego el caracter nulo al final de la cadena
 }
 
 // strMayMin convierte a mayusculas o minusculas
