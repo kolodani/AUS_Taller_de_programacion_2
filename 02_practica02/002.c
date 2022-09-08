@@ -8,6 +8,10 @@
 
 // Prototipo de funcion para calcular el producto escalar de una matriz
 int ** productoEscalar (int filas, int columnas, int escalar, int ** matriz);
+// Prototipo de funcion para imprimir una matriz
+void imprimirMatriz (int filas, int columnas, int ** matriz);
+// Prototipo de funcion para liberar memoria de una matriz
+void liberarMatriz (int filas, int ** matriz);
 
 int main()
 {
@@ -79,7 +83,7 @@ int main()
     */
     
     matrizEscalar = productoEscalar(filas, columnas, escalar, matriz);
-    
+    /*
     // Imprimir la matriz
     printf("Matriz original:\n");
     for (i = 0; i < filas; i++)
@@ -90,7 +94,6 @@ int main()
         }
         printf("\n");
     }
-    
     // Imprimir la matriz escalar
     printf("Matriz escalar:\n");
     for (i = 0; i < filas; i++)
@@ -101,7 +104,14 @@ int main()
         }
         printf("\n");
     }
+    */
+    // Imprimir las matrices
+    printf("Matriz original:\n");
+    imprimirMatriz(filas, columnas, matriz);
+    printf("Matriz escalar:\n");
+    imprimirMatriz(filas, columnas, matrizEscalar);
     
+    /*
     // Liberar memoria
     for (i = 0; i < filas; i++)
     {
@@ -114,7 +124,10 @@ int main()
         free(matrizEscalar[i]);
     }
     free(matrizEscalar);
-    
+    */
+    // Liberar memoria
+    liberarMatriz(filas, matriz);
+    liberarMatriz(filas, matrizEscalar);
     return 0;
 }
 
@@ -147,4 +160,27 @@ int ** productoEscalar (int filas, int columnas, int escalar, int ** matriz)
     }
     
     return matrizesca;
+}
+
+void imprimirMatriz (int filas, int columnas, int ** matriz)
+{
+    int i, j;
+    for (i = 0; i < filas; i++)
+    {
+        for (j = 0; j < columnas; j++)
+        {
+            printf("%d ", matriz[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void liberarMatriz (int filas, int ** matriz)
+{
+    int i;
+    for (i = 0; i < filas; i++)
+    {
+        free(matriz[i]);
+    }
+    free(matriz);
 }
