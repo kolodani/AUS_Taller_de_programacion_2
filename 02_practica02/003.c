@@ -74,7 +74,8 @@ int ** reservarMemoria (int dimension)
     return matriz;
 }
 
-void llenarMatriz(int **matriz, int dimension){
+void llenarMatriz(int **matriz, int dimension)
+{
     int i, j;
     for (i = 0; i < dimension; i++)
     {
@@ -85,7 +86,8 @@ void llenarMatriz(int **matriz, int dimension){
     }
 }
 
-void sumaMatrices(int **matriz1, int **matriz2, int **matrizR, int dimension){
+void sumaMatrices(int **matriz1, int **matriz2, int **matrizR, int dimension)
+{
     int i, j;
     for (i = 0; i < dimension; i++)
     {
@@ -96,7 +98,8 @@ void sumaMatrices(int **matriz1, int **matriz2, int **matrizR, int dimension){
     }
 }
 
-void imprimirMatriz(int **matriz, int dimension){
+void imprimirMatriz(int **matriz, int dimension)
+{
     int i, j;
     for (i = 0; i < dimension; i++)
     {
@@ -108,7 +111,8 @@ void imprimirMatriz(int **matriz, int dimension){
     }
 }
 
-void liberarMemoria(int **matriz, int dimension){
+void liberarMemoria(int **matriz, int dimension)
+{
     int i;
     for (i = 0; i < dimension; i++)
     {
