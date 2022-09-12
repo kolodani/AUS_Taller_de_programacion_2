@@ -5,6 +5,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <time.h>
 
 // Prototipo de funcion que reserva memoria para una matriz
 int ** reservarMemoria (int dimension);
@@ -69,6 +71,7 @@ int **reservarMemoria(int dimension)
 // Funcion para llenar de valores aleatorios una matriz
 void llenarMatriz(int **matriz, int dimension)
 {
+    srand(time(NULL));
     int i, j;
     for (i = 0; i < dimension; i++)
     {
@@ -79,24 +82,48 @@ void llenarMatriz(int **matriz, int dimension)
     }
 }
 
-// Funcion para calcular el determinante de una matriz
+// Funcion para calcular el determinante de una matriz de forma recursiva
 int determinanteMatriz(int **matriz, int dimension)
 {
+    int i, j, k, l;
     int determinante = 0;
     if (dimension == 2)
     {
         determinante = matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
     }
-    else if (dimension == 3)
-    {
-        determinante = matriz[0][0] * matriz[1][1] * matriz[2][2] + matriz[0][1] * matriz[1][2] * matriz[2][0] + 
-        matriz[0][2] * matriz[1][0] * matriz[2][1] - matriz[0][2] * matriz[1][1] * matriz[2][0] - matriz[0][1] * 
-        matriz[1][0] * matriz[2][2] - matriz[0][0] * matriz[1][2] * matriz[2][1];
-    }
     else
     {
-        printf("No se puede calcular el determinante de una matriz de dimension mayor a 3");
+        for (i = 0; i < dimension; i++)
+        {
+            int **matrizAux;
+            matrizAux = reservarMemoria(dimension - 1);
+            for (j = 0; j < dimension - 1; j++)
+            {
+                for (k = 0; k < dimension - 1; k++)
+                {
+                    if (k < i)
+                    {
+                        matrizAux[j][k] = matriz[j + 1][k];
+                    }
+                    else
+                    {
+                        matrizAux[j][k] = matriz[j + 1][k + 1];
+                    }
+                }
+            }
+            if (i % 2 == 0)
+            {
+                l = 1;
+            }
+            else
+            {
+                l = -1;
+            }
+            determinante += matriz[0][i] * determinanteMatriz(matrizAux, dimension - 1) * l;
+            liberarMemoria(matrizAux, dimension - 1);
+        }
     }
+    return determinante;
 }
 
 // Funcion para imprimir una matriz
