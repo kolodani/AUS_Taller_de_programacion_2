@@ -78,54 +78,30 @@ int main()
 // funcion que compara dos tiempos
 int compara_tiempo(Tiempo *t1, Tiempo *t2){
     if (t1->anio < t2->anio)
-    {
         return 1;
-    }else if (t1->anio > t2->anio)
-    {
+    if (t1->anio > t2->anio)
         return -1;
-    }else{
-        if (t1->mes < t2->mes)
-        {
-            return 1;
-        }else if (t1->mes > t2->mes)
-        {
-            return -1;
-        }else{
-            if (t1->dia < t2->dia)
-            {
-                return 1;
-            }else if (t1->dia > t2->dia)
-            {
-                return -1;
-            }else{
-                if (t1->hora < t2->hora)
-                {
-                    return 1;
-                }else if (t1->hora > t2->hora)
-                {
-                    return -1;
-                }else{
-                    if (t1->minuto < t2->minuto)
-                    {
-                        return 1;
-                    }else if (t1->minuto > t2->minuto)
-                    {
-                        return -1;
-                    }else{
-                        if (t1->segundo < t2->segundo)
-                        {
-                            return 1;
-                        }else if (t1->segundo > t2->segundo)
-                        {
-                            return -1;
-                        }else{
-                            return 0;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    if (t1->mes < t2->mes)
+        return 1;
+    if (t1->mes > t2->mes)
+        return -1;
+    if (t1->dia < t2->dia)
+        return 1;
+    if (t1->dia > t2->dia)
+        return -1;
+    if (t1->hora < t2->hora)
+        return 1;
+    if (t1->hora > t2->hora)
+        return -1;
+    if (t1->minuto < t2->minuto)
+        return 1;
+    if (t1->minuto > t2->minuto)
+        return -1;
+    if (t1->segundo < t2->segundo)
+        return 1;
+    if (t1->segundo > t2->segundo)
+        return -1;
+    return 0;
 }
 
 // funcion que imprime un tiempo
