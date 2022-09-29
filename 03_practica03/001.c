@@ -2,7 +2,7 @@
 #include <string.h>
 
 // estructura
-typedef struct tiempo{
+typedef struct {
     int anio, mes, dia, hora, minuto, segundo;
 } Tiempo;
 
