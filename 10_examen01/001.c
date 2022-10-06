@@ -1,13 +1,13 @@
 /*
- *   PRIMER PARCIAL
- */
+*   PRIMER PARCIAL
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-static int id = 0;
+static int id = 1;
 
 typedef struct proceso
 {
@@ -32,44 +32,90 @@ void mostrarScheduler();
 
 int main()
 {
-
+    int i;
+    printf("Inicia el programa\n");
+    printf("Simulacion del proceso para probar el scheduler\n");
+    ingresaProceso();
+    ingresaProceso();
+    ingresaProceso();
+    ingresaProceso();
+    ingresaProceso();
+    ingresaProceso();
+    mostrarScheduler();
+    recorreCola();
+    mostrarScheduler();
+    ingresaProceso();
+    ingresaProceso();
+    mostrarScheduler();
+    recorreCola();
+    mostrarScheduler();
+    recorreCola();
+    mostrarScheduler();
+    recorreCola();
+    mostrarScheduler();
+    recorreCola();
+    mostrarScheduler();
+    ingresaProceso();
+    ingresaProceso();
+    ingresaProceso();
+    mostrarScheduler();
     return 0;
 }
 
-void asignaEstado(proceso *proceso)
+void asignaEstado(proceso *procesoActual)
 {
-    if (strcmp(proceso->estado, "Corriendo") == 0)
+    if (strcmp(procesoActual->estado, "Corriendo") == 0)
     {
-        strcpy(proceso->estado, "Terminado");
+        strcpy(procesoActual->estado, "Terminado");
     }
-    if ((strcmp(proceso->estado, "Listo") == 0 || strcmp(proceso->estado, "Nuevo") == 0) && 
-    (proceso->procesador == 1 || proceso->procesador == 2))
+    if ((strcmp(procesoActual->estado, "Listo") == 0 || strcmp(procesoActual->estado, "Nuevo") == 0) && 
+    (procesoActual->procesador == 1 || procesoActual->procesador == 2))
     {
-        strcpy(proceso->estado, "Corriendo");
+        strcpy(procesoActual->estado, "Corriendo");
     }
-    if (strcmp(proceso->estado, "Nuevo") == 0 )
+    if (strcmp(procesoActual->estado, "Nuevo") == 0  && procesoActual->procesador == 0)
     {
-        strcpy(proceso->estado, "Listo");
+        strcpy(procesoActual->estado, "Listo");
     }
 }
 
 void ingresaProceso()
 {
-    int i;
+    int i, j, pilaLlena = 0;
     srand(time(NULL));
     for (i = 0; i < 10; i++)
     {
         if (scheduling[i] == NULL)
         {
-            proceso *proceso = (proceso *)malloc(sizeof(proceso));
-            proceso->procesador = 0;
-            proceso->id_proceso = rand() % 10000;
-            proceso->prioridad = id;
-            strcpy(proceso->estado, "Nuevo");
-            scheduling[i] = proceso;
+            proceso *procesoActual = (proceso *)malloc(sizeof(proceso));
+            procesoActual->procesador = 0;
+            procesoActual->id_proceso = rand() % 10000;
+            
+            if (i != 0)
+            {
+                for (j = i - 1 ; j >= 0; j--)
+                {
+                    if (scheduling[j]->id_proceso == procesoActual->id_proceso)
+                    {
+                        procesoActual->id_proceso = rand() % 10000;
+                        j = i;
+                    }
+                }
+            }
+            procesoActual->prioridad = id;
+            strcpy(procesoActual->estado, "Nuevo");
+            scheduling[i] = procesoActual;
             id++;
             break;
         }
+        else
+        {
+            pilaLlena++;
+        }
+    }
+    if (pilaLlena == 10)
+    {
+        printf("Pila del procesador llena, no se puede ingresar mas procesos\n");
     }
 }
 
@@ -84,56 +130,91 @@ int terminaProceso()
             {
                 free(scheduling[i]);
                 scheduling[i] = NULL;
-                return scheduling[i]->procesador;
             }
         }
     }
-    return -1;
+    return 1;
 }
 
 void recorreCola()
 {
-    int i, j, procesadorUno = 0, procesadorDos = 0, prioridadUno = 0, prioridadDos = 0;
+    int i, j, procesadorUno = 0, procesadorDos = 0, prioridadUno = 0, prioridadDos = 0, a;
+    a = terminaProceso();
     for (i = 0; i < 10; i++)
     {
-        if (scheduling[i]->procesador == 1)
+        if (scheduling[i] != NULL)
         {
-            procesadorUno++;
-        }
-        if (scheduling[i]->procesador == 2)
-        {
-            procesadorDos++;
+            if (scheduling[i]->procesador == 1)
+            {
+                procesadorUno++;
+            }
+            if (scheduling[i]->procesador == 2)
+            {
+                procesadorDos++;
+            }
         }
     }
     if (procesadorUno == 0)
     {
         for (i = 0; i < 10; i++)
         {
-            if (scheduling[i]->prioridad < scheduling[prioridadUno]->prioridad)
+            if (scheduling[i] != NULL)
             {
-                prioridadUno = i;
+                if (strcmp(scheduling[i]->estado, "Listo") == 0 || strcmp(scheduling[i]->estado, "Nuevo") == 0)
+                {
+                    if (prioridadUno < scheduling[i]->prioridad)
+                    {
+                        prioridadUno = scheduling[i]->prioridad;
+                        scheduling[i]->procesador = 1;
+                        break;
+                    }
+                }
             }
         }
-        scheduling[prioridadUno]->procesador = 1;
     }
     if (procesadorDos == 0)
     {
         for (i = 0; i < 10; i++)
         {
-            if (scheduling[i]->prioridad < scheduling[prioridadDos]->prioridad)
+            if (scheduling[i] != NULL)
             {
-                prioridadDos = i;
+                if (strcmp(scheduling[i]->estado, "Listo") == 0 || strcmp(scheduling[i]->estado, "Nuevo") == 0)
+                {
+                    if (prioridadDos < scheduling[i]->prioridad)
+                    {
+                        prioridadDos = scheduling[i]->prioridad;
+                        if (scheduling[i]->procesador != 1)
+                        {
+                            scheduling[i]->procesador = 2;
+                            break;
+                        }
+                    }
+                }
             }
         }
-        scheduling[prioridadDos]->procesador = 2;
+    }
+    for (i = 0; i < 10; i++)
+    {
+        if (scheduling[i] != NULL)
+        {
+            asignaEstado(scheduling[i]);
+        }
     }
 }
 
 void mostrarScheduler()
 {
     int i;
+    // saber el tipo de dato que se esta mostrando
     for (i = 0; i < 10; i++)
     {
-        printf("[%d]-> {%d;%d;%d;%s}", i, scheduling[i]->procesador, scheduling[i]->id_proceso, scheduling[i]->prioridad, scheduling[i]->estado);
+        if (scheduling[i] != NULL)
+        {
+            printf("[%d]-> {%d;%d;%d;%s}\n", i, scheduling[i]->procesador, scheduling[i]->id_proceso, scheduling[i]->prioridad, scheduling[i]->estado);
+        }else
+        {
+            printf("[%d]->\n", i);
+        }
     }
+    printf("FIN DE UN CICLO\n");
 }
