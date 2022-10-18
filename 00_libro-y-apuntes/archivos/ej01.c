@@ -6,14 +6,16 @@
 
 int main()
 {
-    FILE * pArchivo;
-    
+    FILE *pArchivo;
+
     int contador;
-    
+
     pArchivo = fopen("./NUMEROS.1", "wt");
     /* valida que el archivo este creado correctamente */
-    if (pArchivo != NULL){
-        for (contador = 1; contador <= 100; contador++){
+    if (pArchivo != NULL)
+    {
+        for (contador = 1; contador <= 100; contador++)
+        {
             /* se escriben los numeros */
             fprintf(pArchivo, "%d ", contador);
         }
