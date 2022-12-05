@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/danikolo/Documents/repositorios/AUS_Taller_de_programacion_2/00_libro-y-apuntes/archivos",
-      "program": "/home/danikolo/Documents/repositorios/AUS_Taller_de_programacion_2/00_libro-y-apuntes/archivos/build/Debug/outDebug",
+      "cwd": "/home/danikolo/Documents/repositorios/AUS_Taller_de_programacion_2",
+      "program": "/home/danikolo/Documents/repositorios/AUS_Taller_de_programacion_2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
