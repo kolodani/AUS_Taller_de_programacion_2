@@ -1,5 +1,7 @@
 /* scope1.c */
 
+/* en este caso hay dos variables distintas con el mismo nombre que se utilizan y manipulan de formas diferentes*/
+
 #include "scope1.h"
 
 void imprimeValor()
