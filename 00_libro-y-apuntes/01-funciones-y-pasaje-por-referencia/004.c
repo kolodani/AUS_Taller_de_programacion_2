@@ -1,5 +1,7 @@
 /* scope2.c */
 
+/* aqui la variable es global por lo que cada cambio que se le haga a la misma, perdura */
+
 #include "scope2.h"
 
 void unaFuncion()
