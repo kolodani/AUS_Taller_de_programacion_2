@@ -1,5 +1,7 @@
 /* factorial1.c */
 
+/* la funcion factorial funciona pero no se ve como la funcion matematica */
+
 #include "factorial1.h"
 
 int factorial (int numero)
