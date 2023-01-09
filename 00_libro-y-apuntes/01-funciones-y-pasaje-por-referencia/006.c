@@ -1,5 +1,7 @@
 /* scope4.c */
 
+/* al ser una variable estatica la misma incrementa su valor y no vuelve a ser redeclarada */
+
 #include <stdio.h>
 
 void sumador();
