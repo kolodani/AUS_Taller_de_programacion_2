@@ -1,5 +1,7 @@
 /* scope3.c */
 
+/* en este caso se hace externa a la variable para que su uso sea global en el programa */
+
 #include <stdio.h>
 
 void unaFuncion()
