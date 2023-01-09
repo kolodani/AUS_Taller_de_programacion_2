@@ -1,6 +1,6 @@
 /* funciones1.c */
 
-#include "funciones1.h"
+#include "funciones1.h" // incluyo aqui al prototipo de la funcion cubo
 
 int cubo(int base)
 {
