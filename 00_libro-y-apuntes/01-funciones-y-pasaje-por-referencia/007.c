@@ -1,5 +1,7 @@
 /* referencia1.c */
 
+/* a la funcion se envia una copia del valor de la variable y no la variable en si */
+
 #include "referencia1.h"
 
 void modificar(int variable)
