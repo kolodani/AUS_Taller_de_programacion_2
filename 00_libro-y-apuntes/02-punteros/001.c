@@ -5,7 +5,7 @@
 
 int main()
 {
-  int matriz[10][10], x, y;
+  int matriz[10][10], x, y; // la variable en este caso es un puntero al primer elemento, en este caso de la matriz
 
   for (x = 0; x < 10; x++)
   {
