@@ -2,11 +2,13 @@
 #include <string.h>
 
 // estructura
-typedef struct {
+typedef struct
+{
     int anio, mes, dia, hora, minuto, segundo;
 } Tiempo;
 
-typedef struct {
+typedef struct
+{
     char *nombre;
     Tiempo ultima_mod;
 } Archivo;
@@ -27,56 +29,65 @@ int main()
     Archivo lista[3] = {
         {"bbb.txt", {2015, 10, 1, 12, 30, 12}},
         {"ccc.txt", {2018, 10, 1, 12, 30, 12}},
-        {"aaa.txt", {2021, 10, 1, 12, 30, 12}}
-    };
+        {"aaa.txt", {2021, 10, 1, 12, 30, 12}}};
     Archivo *p_lista = lista;
-    
+    int comparacion;
+
     t1.anio = 2018;
     t1.mes = 8;
     t1.dia = 30;
     t1.hora = 15;
     t1.minuto = 13;
     t1.segundo = 14;
-    
-    t2.anio = 2018;
+
+    t2.anio = 2019;
     t2.mes = 8;
     t2.dia = 30;
     t2.hora = 15;
     t2.minuto = 13;
     t2.segundo = 14;
-    
-    if (compara_tiempo(pt1, pt2) == 1){
+
+    comparacion = compara_tiempo(pt1, pt2);
+    if (comparacion == 1)
+    {
         printf("El tiempo 1 es anterior que el tiempo 2\n");
-    }else if (compara_tiempo(pt1, pt2) == -1){
+    }
+    else if (comparacion == -1)
+    {
         printf("El tiempo 2 es anterior que el tiempo 1\n");
-    }else{
+    }
+    else
+    {
         printf("Los tiempos son iguales\n");
     }
-    
+
     printf("Tiempo 1: ");
     imprime_tiempo(t1);
     printf("Tiempo 2: ");
     imprime_tiempo(t2);
-    
+
     ordena_alfa(p_lista, 3);
     printf("Lista ordenada alfabeticamente: \n");
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++)
+    {
         printf("%s ", lista[i].nombre);
         imprime_tiempo(lista[i].ultima_mod);
     }
-    
+
     ordena_temporal(p_lista, 3);
     printf("Lista ordenada temporalmente: \n");
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++)
+    {
         printf("%s ", lista[i].nombre);
         imprime_tiempo(lista[i].ultima_mod);
     }
-    
+
     return 0;
 }
 
 // funcion que compara dos tiempos
-int compara_tiempo(Tiempo *t1, Tiempo *t2){
+int compara_tiempo(Tiempo *t1, Tiempo *t2)
+{
     if (t1->anio < t2->anio)
         return 1;
     if (t1->anio > t2->anio)
@@ -105,12 +116,14 @@ int compara_tiempo(Tiempo *t1, Tiempo *t2){
 }
 
 // funcion que imprime un tiempo
-void imprime_tiempo(Tiempo t){
+void imprime_tiempo(Tiempo t)
+{
     printf("%d/%d/%d %d:%d:%d\n", t.dia, t.mes, t.anio, t.hora, t.minuto, t.segundo);
 }
 
 // funcion que ordena una lista de archivos alfabeticamente
-void ordena_alfa(Archivo *lista, int n){
+void ordena_alfa(Archivo *lista, int n)
+{
     int i, j;
     for (i = 0; i < n; i++)
     {
@@ -127,7 +140,8 @@ void ordena_alfa(Archivo *lista, int n){
 }
 
 // funcion que ordena una lista de archivos por fecha de modificacion
-void ordena_temporal(Archivo *lista, int n){
+void ordena_temporal(Archivo *lista, int n)
+{
     int i, j;
     for (i = 0; i < n; i++)
     {
