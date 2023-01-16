@@ -9,21 +9,21 @@
 #include <time.h>
 
 // Prototipo de funcion que reserva memoria para una matriz
-int ** reservarMemoria (int dimension);
+int **reservarMemoria(int dimension);
 // Prototipo de funcion para llenar de valores aleatorios una matriz
-void llenarMatriz (int ** matriz, int dimension);
+void llenarMatriz(int **matriz, int dimension);
 // Prototipo de funcion para calcular el determinante de una matriz
-int determinanteMatriz (int ** matriz, int dimension);
+int determinanteMatriz(int **matriz, int dimension);
 // Prototipo de funcion para imprimir una matriz
-void imprimirMatriz (int ** matriz, int dimension);
+void imprimirMatriz(int **matriz, int dimension);
 // Prototipo de funcion para liberar memoria de una matriz
-void liberarMemoria (int ** matriz, int dimension);
+void liberarMemoria(int **matriz, int dimension);
 
 int main()
 {
     // Declaracion de variables
     int dimension, i, j, determinante;
-    int ** matrizA;
+    int **matrizA;
     // Solicitar la dimension de la matriz por teclado
     printf("Bienvenido al determinante de una matriz\n");
     printf("Ingrese la dimension de la matriz:\n");
@@ -41,7 +41,7 @@ int main()
     printf("Determinante de la matriz A: %d\n", determinante);
     // Liberar memoria
     liberarMemoria(matrizA, dimension);
-    
+
     return 0;
 }
 
