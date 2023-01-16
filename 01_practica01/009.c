@@ -7,16 +7,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef enum { MAYUSCULAS, MINUSCULAS } may_min;
+typedef enum
+{
+    MAYUSCULAS,
+    MINUSCULAS
+} may_min;
 
 // Prototipos
-int strLargo(const char *origen); // cantidad de caracteres
-int strVacio(const char *origen); // retorna 1 si tiene al menos un caracter, 0 en otro caso
-void strCopia(char *destino, const char *origen); // copiador
-char* reverse(char *string); // retorna una cadena que es string invertida
-void strIzq(char *destino, const char *origen); // saca blancos Izq
-void strDer(char *destino, const char *origen); // saca blancos Der
-void strAmbos(char *destino, const char *origen); // saca blancos Izq y Der
+int strLargo(const char *origen);                             // cantidad de caracteres
+int strVacio(const char *origen);                             // retorna 1 si tiene al menos un caracter, 0 en otro caso
+void strCopia(char *destino, const char *origen);             // copiador
+char *reverse(char *string);                                  // retorna una cadena que es string invertida
+void strIzq(char *destino, const char *origen);               // saca blancos Izq
+void strDer(char *destino, const char *origen);               // saca blancos Der
+void strAmbos(char *destino, const char *origen);             // saca blancos Izq y Der
 void strMayMin(char *destino, const char *origen, may_min m); // convierte a mayusculas o minusculas
 
 // Funcion principal
@@ -24,8 +28,8 @@ int main()
 {
     char *text1 = " Sera Cierto ?? ";
     int largo = strLargo(text1) + 1;
-    char *result = (char*)malloc(largo);
-    char* reves;
+    char *result = (char *)malloc(largo);
+    char *reves;
     if (result == NULL)
     {
         return -1; // sino pudo reservar memoria para result
@@ -48,7 +52,7 @@ int main()
     printf("Minusculas: [%s]\n", result);
     reves = reverse(text1);
     printf("La cadena: %s invertida queda: %s\n", text1, reves);
-    
+
     return 0;
 }
 
@@ -84,25 +88,25 @@ void strCopia(char *destino, const char *origen)
     while (origen[i] != '\0') // recorro el arreglo hasta encontrar el caracter nulo
     {
         destino[i] = origen[i]; // copio el caracter
-        i++; // incremento el contador
+        i++;                    // incremento el contador
     }
     destino[i] = '\0'; // agrego el caracter nulo al final de la cadena
 }
 
 // reverse retorna una cadena que es string invertida
-char* reverse(char *string)
+char *reverse(char *string)
 {
     int i = 0;
-    int j = strLargo(string) - 1;  // largo de la cadena - 1 para que no cuente el caracter nulo
-    char *reversed = (char*)malloc(strLargo(string) + 1); // reservo memoria para la cadena invertida + 1 para el caracter nulo
-    while (i < strLargo(string)) // recorro la cadena hasta el caracter nulo
+    int j = strLargo(string) - 1;                          // largo de la cadena - 1 para que no cuente el caracter nulo
+    char *reversed = (char *)malloc(strLargo(string) + 1); // reservo memoria para la cadena invertida + 1 para el caracter nulo
+    while (i < strLargo(string))                           // recorro la cadena hasta el caracter nulo
     {
         reversed[i] = string[j]; // copio el caracter de la cadena original en la cadena invertida
-        i++; // incremento el contador
-        j--; // decremento el contador
+        i++;                     // incremento el contador
+        j--;                     // decremento el contador
     }
     reversed[i] = '\0'; // agrego el caracter nulo al final de la cadena
-    return reversed; // retorno la cadena invertida
+    return reversed;    // retorno la cadena invertida
 }
 
 // strIzq saca los espacios en blancos a la izquierda
@@ -117,10 +121,10 @@ void strIzq(char *destino, const char *origen)
     while (origen[i] != '\0') // recorro la cadena hasta el caracter nulo
     {
         destino[j] = origen[i]; // copio el caracter
-        i++; // incremento el contador
-        j++; // incremento el contador
+        i++;                    // incremento el contador
+        j++;                    // incremento el contador
     }
-    destino[j] = '\0';  // agrego el caracter nulo al final de la cadena
+    destino[j] = '\0'; // agrego el caracter nulo al final de la cadena
 }
 
 // strDer saca los espacios en blancos a la derecha
@@ -132,7 +136,7 @@ void strDer(char *destino, const char *origen)
     {
         i++; // incremento el contador
     }
-    i--; // decremento el contador para que no cuente el caracter nulo
+    i--;                     // decremento el contador para que no cuente el caracter nulo
     while (origen[i] == ' ') // recorro la cadena hasta que no encuentre un espacio en blanco
     {
         i--; // decremento el contador
@@ -140,7 +144,7 @@ void strDer(char *destino, const char *origen)
     while (j <= i) // recorro la cadena hasta el caracter nulo
     {
         destino[j] = origen[j]; // copio el caracter
-        j++; // incremento el contador
+        j++;                    // incremento el contador
     }
     destino[j] = '\0'; // agrego el caracter nulo al final de la cadena
 }
@@ -157,10 +161,10 @@ void strAmbos(char *destino, const char *origen)
     while (origen[i] != '\0') // recorro la cadena hasta el caracter nulo
     {
         destino[j] = origen[i]; // copio el caracter
-        i++; // incremento el contador
-        j++; // incremento el contador
+        i++;                    // incremento el contador
+        j++;                    // incremento el contador
     }
-    i--; // decremento el contador para que no cuente el caracter nulo
+    i--;                      // decremento el contador para que no cuente el caracter nulo
     while (destino[i] != ' ') // recorro la cadena hasta que no encuentre un espacio en blanco
     {
         i--; // decremento el contador
