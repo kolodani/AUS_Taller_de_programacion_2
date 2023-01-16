@@ -5,28 +5,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Prototipo de funcion que reserva memoria para una matriz
-int ** reservarMemoria (int dimension);
+int **reservarMemoria(int dimension);
 // Prototipo de funcion para llenar de valores aleatorios una matriz
-void llenarMatriz (int ** matriz, int dimension);
+void llenarMatriz(int **matriz, int dimension);
 // Prototipo de funcion para la suma de dos matrices
-void sumaMatrices (int ** matriz1, int ** matriz2, int ** matrizR, int dimension);
+void sumaMatrices(int **matriz1, int **matriz2, int **matrizR, int dimension);
 // Prototipo de funcion para imprimir una matriz
-void imprimirMatriz (int ** matriz, int dimension);
+void imprimirMatriz(int **matriz, int dimension);
 // Prototipo de funcion para liberar memoria de una matriz
-void liberarMemoria (int ** matriz, int dimension);
+void liberarMemoria(int **matriz, int dimension);
 
 int main()
 {
     // Declaracion de variables
     int dimension, i;
-    int ** matrizA, ** matrizB, ** matrizSuma;
+    int **matrizA, **matrizB, **matrizSuma;
     // Solicitar la dimensión de las matrices por teclado
     printf("Bienvenido a suma de matrices\n");
     printf("Ingrese la dimension que tiene cada matriz:\n");
     printf("> ");
-    scanf("%d", &dimension);;
+    scanf("%d", &dimension);
+    ;
     // Solicitar memoria para el almacenamiento
     matrizA = reservarMemoria(dimension);
     matrizB = reservarMemoria(dimension);
@@ -47,15 +49,15 @@ int main()
     liberarMemoria(matrizA, dimension);
     liberarMemoria(matrizB, dimension);
     liberarMemoria(matrizSuma, dimension);
-    
+
     return 0;
 }
 
 // Funcion que reserva memoria para una matriz
-int ** reservarMemoria (int dimension)
+int **reservarMemoria(int dimension)
 {
     int i;
-    int ** matriz;
+    int **matriz;
     matriz = (int **)malloc(dimension * sizeof(int *));
     if (matriz == NULL)
     {
@@ -77,6 +79,7 @@ int ** reservarMemoria (int dimension)
 void llenarMatriz(int **matriz, int dimension)
 {
     int i, j;
+    srand(time(NULL));
     for (i = 0; i < dimension; i++)
     {
         for (j = 0; j < dimension; j++)
