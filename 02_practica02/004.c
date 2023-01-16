@@ -5,21 +5,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Prototipo de funcion que reserva memoria para una matriz
-int ** reservarMemoria (int filas, int columnas);
+int **reservarMemoria(int filas, int columnas);
 // Prototipo de funcion para llenar de valores aleatorios una matriz
-void llenarMatriz (int ** matriz, int filas, int columnas);
+void llenarMatriz(int **matriz, int filas, int columnas);
 // Prototipo de funcion para la transpuesta de una matriz
-void transpuestaMatriz (int ** matriz, int ** matrizTranspuesta, int filas, int columnas);
+void transpuestaMatriz(int **matriz, int **matrizTranspuesta, int filas, int columnas);
 // Prototipo de funcion para imprimir una matriz
-void imprimirMatriz (int ** matriz, int filas, int columnas);
+void imprimirMatriz(int **matriz, int filas, int columnas);
 
 int main()
 {
     // Declaracion de variables
     int filas, columnas, i, j;
-    int ** matrizA, ** matrizT;
+    int **matrizA, **matrizT;
     // Solicitar las filas y las columnas de las matrices por teclado
     printf("Bienvenido a la matriz transpuesta\n");
     printf("Ingrese la cantidad de filas de la matriz:\n");
@@ -40,14 +41,14 @@ int main()
     imprimirMatriz(matrizA, filas, columnas);
     printf("Matriz Transpuesta:\n");
     imprimirMatriz(matrizT, columnas, filas);
-    
+
     return 0;
 }
 
 int **reservarMemoria(int filas, int columnas)
 {
     int i, j;
-    int ** matriz;
+    int **matriz;
     matriz = (int **)malloc(filas * sizeof(int *));
     if (matriz == NULL)
     {
@@ -69,6 +70,7 @@ int **reservarMemoria(int filas, int columnas)
 void llenarMatriz(int **matriz, int filas, int columnas)
 {
     int i, j;
+    srand(time(NULL));
     for (i = 0; i < filas; i++)
     {
         for (j = 0; j < columnas; j++)
