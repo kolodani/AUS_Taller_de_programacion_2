@@ -1,3 +1,8 @@
+/*
+    Practica 03
+    Ejercicio 01
+*/
+
 #include <stdio.h>
 #include <string.h>
 
