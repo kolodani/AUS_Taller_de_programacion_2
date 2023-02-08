@@ -3,18 +3,16 @@
 #include <stdio.h>
 #include <string.h>
 
-union Data
+union Data // defino la union
 {
-  int i;
-  float f;
-  char str[20];
+  int i;        // variable entera
+  float f;      // variable flotante
+  char str[20]; // arreglo de caracteres
 };
 
 int main()
 {
-  union Data data;
-
-  printf("Memory size occupied by data: %d\n", sizeof(data));
-
+  union Data data;                                            // declaro una variable de tipo union
+  printf("Memory size occupied by data: %d\n", sizeof(data)); // muestro el tamaño de la union
   return 0;
 }
