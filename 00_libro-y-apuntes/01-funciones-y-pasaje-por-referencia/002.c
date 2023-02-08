@@ -1,6 +1,6 @@
 /* puedo llamar una funcion dentro de otra funcion, lo que es muy conveniente poder encadenar funciones*/
 
-#include "funciones2.h"
+#include "funciones2.h" // incluyo el archivo de cabecera
 
 int segunda(int x, int j)
 {

@@ -2,7 +2,7 @@
 
 /* en este caso hay dos variables distintas con el mismo nombre que se utilizan y manipulan de formas diferentes*/
 
-#include "scope1.h"
+#include "scope1.h" // incluyo el archivo de cabecera
 
 void imprimeValor()
 {
