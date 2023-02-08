@@ -4,18 +4,18 @@
 
 #include <stdio.h>
 
-void sumador();
+void sumador(); // prototipo de la funcion
 
 void sumador()
 {
-  static int contador = 0;
-  printf("El valor de contador es: %d\n", contador);
-  contador++;
+  static int contador = 0; // variable estatica lo que hace que su valor no se pierda
+  printf("El valor de contador es: %d\n", contador); // imprime el valor de la variable
+  contador++; // incrementa el valor de la variable en 1
 }
 
 int main()
 {
-  sumador();
+  sumador(); // llama a la funcion sumador 4 veces
   sumador();
   sumador();
   sumador();
