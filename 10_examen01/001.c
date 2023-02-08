@@ -1,5 +1,5 @@
 /*
-*   PRIMER PARCIAL
+ *   PRIMER PARCIAL
 */
 
 #include <stdio.h>
@@ -68,12 +68,12 @@ void asignaEstado(proceso *procesoActual)
     {
         strcpy(procesoActual->estado, "Terminado");
     }
-    if ((strcmp(procesoActual->estado, "Listo") == 0 || strcmp(procesoActual->estado, "Nuevo") == 0) && 
-    (procesoActual->procesador == 1 || procesoActual->procesador == 2))
+    if ((strcmp(procesoActual->estado, "Listo") == 0 || strcmp(procesoActual->estado, "Nuevo") == 0) &&
+        (procesoActual->procesador == 1 || procesoActual->procesador == 2))
     {
         strcpy(procesoActual->estado, "Corriendo");
     }
-    if (strcmp(procesoActual->estado, "Nuevo") == 0  && procesoActual->procesador == 0)
+    if (strcmp(procesoActual->estado, "Nuevo") == 0 && procesoActual->procesador == 0)
     {
         strcpy(procesoActual->estado, "Listo");
     }
@@ -90,10 +90,10 @@ void ingresaProceso()
             proceso *procesoActual = (proceso *)malloc(sizeof(proceso));
             procesoActual->procesador = 0;
             procesoActual->id_proceso = rand() % 10000;
-            
+
             if (i != 0)
             {
-                for (j = i - 1 ; j >= 0; j--)
+                for (j = i - 1; j >= 0; j--)
                 {
                     if (scheduling[j]->id_proceso == procesoActual->id_proceso)
                     {
@@ -211,7 +211,8 @@ void mostrarScheduler()
         if (scheduling[i] != NULL)
         {
             printf("[%d]-> {%d;%d;%d;%s}\n", i, scheduling[i]->procesador, scheduling[i]->id_proceso, scheduling[i]->prioridad, scheduling[i]->estado);
-        }else
+        }
+        else
         {
             printf("[%d]->\n", i);
         }
