@@ -8,33 +8,31 @@
 
 int main()
 {
-    FILE *pArchivo, *pArchivoApellidos;
-
-    pArchivo = fopen("./NOMBRES.DAT", "r");
-    pArchivoApellidos = fopen("./APELLIDOS.DAT", "w");
-
-    if (pArchivo != NULL)
+    FILE *pArchivo, *pArchivoApellidos;                // Punteros a archivos
+    pArchivo = fopen("./NOMBRES.DAT", "r");            // Abro el archivo en modo lectura "r" (read)
+    pArchivoApellidos = fopen("./APELLIDOS.DAT", "w"); // Abro el archivo en modo escritura "w" (write)
+    if (pArchivo != NULL)                              // Si el archivo se abrio correctamente
     {
         char c = getc(pArchivo); // Leo el primer caracter
-        while (c != EOF)         // Mientras no sea el final del archivo
+        while (c != EOF)         // Mientras no sea el final del archivo (EOF = End Of File)
         {
-            char nombre[20];   // Guardo el nombre
-            char apellido[20]; // Guardo el apellido
+            char nombre[20];   // arreglo para guardar el nombre
+            char apellido[20]; // arreglo para guardar el apellido
             int i = 0;         // Contador
-            while (c != ' ')
+            while (c != ' ')   // Mientras no sea un espacio
             {
                 nombre[i] = c;      // Guardo el caracter en el nombre
                 c = getc(pArchivo); // Leo el siguiente caracter
-                i++;
+                i++;                // Incremento el contador
             }
             nombre[i] = '\0';   // Agrego el caracter de fin de cadena
             c = getc(pArchivo); // Leo el siguiente caracter
             i = 0;              // Reinicio el contador
-            while (c != '\n')
+            while (c != '\n')   // Mientras no sea un salto de linea
             {
                 apellido[i] = c;    // Guardo el caracter en el apellido
                 c = getc(pArchivo); // Leo el siguiente caracter
-                i++;
+                i++;                // Incremento el contador
             }
             apellido[i] = '\0';                                      // Agrego el caracter de fin de cadena
             c = getc(pArchivo);                                      // Leo el siguiente caracter
@@ -43,7 +41,7 @@ int main()
     }
     else
     {
-        printf("Error al abrir el archivo");
+        printf("Error al abrir el archivo"); // Si el archivo no se abrió correctamente, informo el error
     }
     return 0;
 }
