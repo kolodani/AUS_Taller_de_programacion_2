@@ -6,32 +6,27 @@
 
 int main()
 {
-    FILE *pArchivo;
-
-    int contador;
-
-    pArchivo = fopen("./NUMEROS.1", "wt");
-    /* valida que el archivo este creado correctamente */
-    if (pArchivo != NULL)
+    FILE *pArchivo;                        // puntero a archivo
+    int contador;                          // contador
+    pArchivo = fopen("./NUMEROS.1", "wt"); // se crea el archivo en modo escritura "w" (write) y texto "t" (text)
+    if (pArchivo != NULL)                  // si el archivo se creo correctamente
     {
-        for (contador = 1; contador <= 100; contador++)
+        for (contador = 1; contador <= 100; contador++) // bucle para escribir los numeros del 1 al 100
         {
-            /* se escriben los numeros */
-            fprintf(pArchivo, "%d ", contador);
+            fprintf(pArchivo, "%d ", contador); // se escribe el numero en el archivo
         }
-        /* se cierra el archivo */
-        if (!fclose(pArchivo))
+        if (!fclose(pArchivo)) // si el archivo se cerro correctamente
         {
-            printf("El archivo ha sido cerrado.\n");
+            printf("El archivo ha sido cerrado.\n"); // se informa que el archivo se cerro correctamente
         }
         else
         {
-            printf("Error al cerrar el archivo.\n");
+            printf("Error al cerrar el archivo.\n"); // si el archivo no se cerro correctamente, se informa el error
         }
     }
     else
     {
-        printf("Error al crear el archivo.\n");
+        printf("Error al crear el archivo.\n"); // si el archivo no se creo correctamente, se informa el error
     }
     return 0;
 }
