@@ -32,7 +32,6 @@ void mostrarScheduler();
 
 int main()
 {
-    int i;
     printf("Inicia el programa\n");
     printf("Simulacion del proceso para probar el scheduler\n");
     ingresaProceso();
@@ -138,8 +137,8 @@ int terminaProceso()
 
 void recorreCola()
 {
-    int i, j, procesadorUno = 0, procesadorDos = 0, prioridadUno = 0, prioridadDos = 0, a;
-    a = terminaProceso();
+    int i, procesadorUno = 0, procesadorDos = 0, prioridadUno = 0, prioridadDos = 0;
+    int a = terminaProceso();
     for (i = 0; i < 10; i++)
     {
         if (scheduling[i] != NULL)
