@@ -11,7 +11,7 @@ void sumaMatrices(int n, int matrizA[n][n], int matrizB[n][n]);
 
 int main()
 {
-    int n, i, j;
+    int n;
     printf("Bienvenido a la suma de matrices NxN\n");
     printf("primero ingrese el tamaño de la matriz:\n");
     printf("> ");
@@ -47,7 +47,7 @@ void cargarMatriz(int n, int matriz[n][n])
     {
         for (j = 0; j < n; j++)
         {
-            printf("Ingrese el valor de la posicion (%d, %d): ", i, j);
+            printf("Ingrese el valor de la posicion (%d, %d): ", i + 1, j + 1);
             scanf("%d", &matriz[i][j]);
         }
     }
