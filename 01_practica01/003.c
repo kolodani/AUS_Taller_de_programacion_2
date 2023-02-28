@@ -5,6 +5,10 @@
 
 #include <stdio.h>
 
+void cargarMatriz(int n, int matriz[n][n]);
+void imprimirMatriz(int n, int matriz[n][n]);
+void sumaMatrices(int n, int matrizA[n][n], int matrizB[n][n]);
+
 int main()
 {
     int n, i, j;
@@ -17,55 +21,60 @@ int main()
     int matrizB[n][n];
 
     printf("Ahora ingrese los valores de la matriz A:\n");
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            printf("A[%d][%d] = ", i + 1, j + 1);
-            scanf("%d", &matrizA[i][j]); // ingreso los valores de la matriz
-        }
-    }
+    cargarMatriz(n, matrizA); // cargo los valores de la matriz A
 
     printf("Ahora ingrese los valores de la matriz B:\n");
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            printf("B[%d][%d] = ", i + 1, j + 1);
-            scanf("%d", &matrizB[i][j]); // ingreso los valores de la matriz
-        }
-    }
+    cargarMatriz(n, matrizB); // cargo los valores de la matriz B
 
     printf("El tamaño de las matrices es: %d x %d\n", n, n); // imprimo el tamaño de las matrices
     printf("El contenido de las matrices es:\n");
     printf("La matriz A es:\n");
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            printf("%d ", matrizA[i][j]);
-        }
-        printf("\n");
-    }
+    imprimirMatriz(n, matrizA); // imprimo la matriz A
 
     printf("La matriz B es:\n");
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            printf("%d ", matrizB[i][j]);
-        }
-        printf("\n");
-    }
+    imprimirMatriz(n, matrizB); // imprimo la matriz B
 
     printf("La suma de la matriz A y B es:\n");
+    sumaMatrices(n, matrizA, matrizB); // imprimo la suma de las matrices
+
+    return 0;
+}
+
+void cargarMatriz(int n, int matriz[n][n])
+{
+    int i, j;
     for (i = 0; i < n; i++)
     {
         for (j = 0; j < n; j++)
         {
-            printf("%d ", matrizA[i][j] + matrizB[i][j]); // imprimo la suma de las matrices
+            printf("Ingrese el valor de la posicion (%d, %d): ", i, j);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+}
+
+void imprimirMatriz(int n, int matriz[n][n])
+{
+    int i, j;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%d ", matriz[i][j]);
         }
         printf("\n");
     }
-    return 0;
+}
+
+void sumaMatrices(int n, int matrizA[n][n], int matrizB[n][n])
+{
+    int i, j;
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            printf("%d ", matrizA[i][j] + matrizB[i][j]);
+        }
+        printf("\n");
+    }
 }
