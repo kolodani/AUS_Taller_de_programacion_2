@@ -10,7 +10,7 @@ char *semanal(int, char (*)[10]);
 int main()
 {
     char semana[7][10] = {"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"}; // arreglo con los 7 dias de la semana
-    int num, i;
+    int num;
     char *puntero;
     printf("Ingrese un numero del 1 al 7 y recibira un dia de la semana:\n");
     printf("> ");
