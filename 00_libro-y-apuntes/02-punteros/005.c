@@ -11,7 +11,7 @@ typedef struct // defino la estructura
     char nombre[30]; // arreglo de caracteres
 } direccion;         // nombre de la estructura
 
-void main()
+int main()
 {
     direccion *pdir;                                                                   // puntero a la estructura creada
     pdir = (direccion *)malloc(sizeof(direccion));                                     // reservo memoria para la estructura
@@ -19,4 +19,5 @@ void main()
     pdir->numero = 2022;                                                               // asigno el valor 2010 a la variable numero
     strcpy(pdir->nombre, "Fulano");                                                    // copio el contenido de la cadena de caracteres a la variable nombre
     printf("La direccion de %s es: %s %d\n", pdir->nombre, pdir->calle, pdir->numero); // imprimo los datos
+    return 0;
 }
