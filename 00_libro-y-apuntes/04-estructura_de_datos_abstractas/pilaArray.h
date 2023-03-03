@@ -5,7 +5,7 @@
 int elementos[CAPACIDAD];
 int cima = -1;
 
-voide apila(int);
+void apila(int);
 
 int desapila();
 
@@ -15,4 +15,4 @@ int tamaño();
 
 int estaVacia();
 
-int cima();
+int valorCima();
