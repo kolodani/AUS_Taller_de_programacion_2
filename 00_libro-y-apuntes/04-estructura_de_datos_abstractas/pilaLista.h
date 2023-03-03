@@ -13,6 +13,6 @@ void vaciaPila (pila **);
 
 int tamaño (pila *);
 
-int estaVacia (pila **);
+bool estaVacia (pila **);
 
-int cima (pila *);
+int valorCima (pila *);
