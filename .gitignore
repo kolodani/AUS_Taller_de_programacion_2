@@ -5,6 +5,9 @@ build
 pseudocodigo
 arbolbinario
 pilaArray
+pilaLista
+colaLista
+colaCircular
 launch.json
 001
 002
