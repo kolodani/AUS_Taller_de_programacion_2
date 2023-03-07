@@ -46,6 +46,62 @@ int es_miembro(arbol *A, int x)
     }
 }
 
+int suprime_min(arbol **A)
+{
+    int v_ref;
+    if ((*A)->h_izq == NULL)
+    {
+        v_ref = (*A)->dato;
+        arbol *tmp = *A;
+        *A = (*A)->h_der;
+        free(tmp);
+        return v_ref;
+    }
+    else
+    {
+        return suprime_min(&((*A)->h_izq));
+    }
+}
+
+void suprime(arbol **A, int x)
+{
+    if (*A != NULL)
+    {
+        if (x < (*A)->dato)
+        {
+            suprime(&((*A)->h_izq), x);
+        }
+        else if (x > (*A)->dato)
+        {
+            suprime(&((*A)->h_der), x);
+        }
+        else
+        {
+            if ((*A)->h_izq == NULL && (*A)->h_der == NULL)
+            {
+                free(*A);
+                *A = NULL;
+            }
+            else if ((*A)->h_izq == NULL)
+            {
+                arbol *tmp = *A;
+                *A = (*A)->h_der;
+                free(tmp);
+            }
+            else if ((*A)->h_der == NULL)
+            {
+                arbol *tmp = *A;
+                *A = (*A)->h_izq;
+                free(tmp);
+            }
+            else
+            {
+                (*A)->dato = suprime_min(&((*A)->h_der));
+            }
+        }
+    }
+}
+
 int main()
 {
     arbol *raiz;
@@ -58,6 +114,10 @@ int main()
     inserta(&raiz, 18);
     inserta(&raiz, 16);
     inserta(&raiz, 3);
+    inserta(&raiz, 7);
+    inserta(&raiz, 12);
+    suprime(&raiz, 10);
+    suprime(&raiz, 7);
 
     if (es_miembro(raiz, 5) == 1)
     {
