@@ -102,6 +102,36 @@ void suprime(arbol **A, int x)
     }
 }
 
+void inorden(arbol *A)
+{
+    if (A != NULL)
+    {
+        inorden(A->h_izq);
+        printf("%d ", A->dato);
+        inorden(A->h_der);
+    }
+}
+
+void preorden(arbol *A)
+{
+    if (A != NULL)
+    {
+        printf("%d ", A->dato);
+        preorden(A->h_izq);
+        preorden(A->h_der);
+    }
+}
+
+void postorden(arbol *A)
+{
+    if (A != NULL)
+    {
+        postorden(A->h_izq);
+        postorden(A->h_der);
+        printf("%d ", A->dato);
+    }
+}
+
 int main()
 {
     arbol *raiz;
@@ -109,15 +139,14 @@ int main()
 
     /* armar codigo de main para probar el arbol */
 
-    inserta(&raiz, 10);
-    inserta(&raiz, 5);
-    inserta(&raiz, 18);
-    inserta(&raiz, 16);
-    inserta(&raiz, 3);
-    inserta(&raiz, 7);
     inserta(&raiz, 12);
-    suprime(&raiz, 10);
-    suprime(&raiz, 7);
+    inserta(&raiz, 7);
+    inserta(&raiz, 20);
+    inserta(&raiz, 24);
+    inserta(&raiz, 3);
+    inserta(&raiz, 8);
+    inserta(&raiz, 15);
+    inserta(&raiz, 30);
 
     if (es_miembro(raiz, 5) == 1)
     {
@@ -135,6 +164,17 @@ int main()
     {
         printf("No existe\n");
     }
+
+    // impresiones
+    printf("Inorden: ");
+    inorden(raiz);
+    printf("\n");
+    printf("Preorden: ");
+    preorden(raiz);
+    printf("\n");
+    printf("Postorden: ");
+    postorden(raiz);
+    printf("\n");
 
     return 0;
 }

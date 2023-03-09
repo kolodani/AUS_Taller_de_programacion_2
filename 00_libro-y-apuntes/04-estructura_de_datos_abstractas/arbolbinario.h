@@ -17,3 +17,9 @@ int suprime_minimo(arbol **);
 void suprime(arbol **, int);
 
 void listar(arbol *);
+
+void inorder(arbol *);
+
+void preorder(arbol *);
+
+void postorder(arbol *);
