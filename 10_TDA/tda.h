@@ -1,17 +1,23 @@
-/* tda.c */
+/* tda.h */
+
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define LONG_MAX_NOMBRE 10
 
 typedef struct nodo {
     char nombre[LONG_MAX_NOMBRE];
-    char voto;
-    *nodo siguiente;
-}chicos_buenos, chicos_malos;
+    struct nodo *siguiente;
+}legisladores;
 
-void inserta (char [], nodo);
+void inserta (char [], legisladores**);
 
-void suprimir (char [], nodo);
+void suprimir (char [], legisladores**);
 
-bool miembro (char [], nodo);
+bool miembro (char [], legisladores**);
 
-void mostrar (nodo);
+void mostrar (legisladores**);
+
+void votacion (legisladores**, legisladores**, char [], char);
