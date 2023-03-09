@@ -8,7 +8,7 @@ typedef struct nodo {
     struct nodo *h_der;
 }arbol;
 
-void insertar(arbol **, int);
+void inserta(arbol **, int);
 
 int es_miembro(arbol *, int);
 
