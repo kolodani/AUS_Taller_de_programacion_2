@@ -14,6 +14,7 @@ int main(){
     while (fin_del_programa != 'N')
     {
         cantidad++;
+        voto = ' ';
         printf("Esta es la votacion numero %d\n", cantidad);
         while(voto != 'E'){
             printf("agregue 'F' si el voto es favorable, 'D' si desfavorable y 'E' para terminar la votacion\n");
@@ -43,10 +44,13 @@ void inserta (char nombre[], legisladores** lista){
         (*lista)->siguiente = NULL;
     }
     else{
-        legisladores *nuevo = (legisladores*)malloc(sizeof(legisladores));
-        strcpy(nuevo->nombre, nombre);
-        (*lista)->siguiente = nuevo;
-        nuevo->siguiente = NULL;
+        legisladores *aux = *lista;
+        while(aux->siguiente != NULL){
+            aux = aux->siguiente;
+        }
+        aux->siguiente = (legisladores*)malloc(sizeof(legisladores));
+        strcpy(aux->siguiente->nombre, nombre);
+        aux->siguiente->siguiente = NULL;
     }
 }
 
@@ -56,35 +60,40 @@ void suprimir (char nombre[], legisladores** lista){
     }
     else{
         legisladores *aux = *lista;
-        while(aux != NULL){
-            if(aux->nombre == nombre){
-                *lista = (*lista)->siguiente;
-                free(aux);
-            }
-            else{
-                *lista = (*lista)->siguiente;
-                aux = aux->siguiente;
+        if(strcmp(aux->nombre, nombre) == 0){
+            *lista = (*lista)->siguiente;
+            free(aux);
+        }
+        else{
+            while(aux->siguiente != NULL){
+                if(strcmp(aux->siguiente->nombre, nombre) == 0){
+                    legisladores *aux2 = aux->siguiente;
+                    aux->siguiente = aux->siguiente->siguiente;
+                    free(aux2);
+                }
+                else{
+                    aux = aux->siguiente;
+                }
             }
         }
     }
 }
 
-bool miembro (char nombre[], legisladores** lista){
+int miembro (char nombre[], legisladores** lista){
     if(lista == NULL){
-        return false;
+        return 0;
     }
     else{
         legisladores *aux = *lista;
         while(aux != NULL){
-            if(aux->nombre == nombre){
-                return true;
+            if(strcmp(aux->nombre, nombre) == 0){
+                return 1;
             }
             else{
-                *lista = (*lista)->siguiente;
                 aux = aux->siguiente;
             }
         }
-        return false;
+        return 0;
     }
 }
 
@@ -96,23 +105,22 @@ void mostrar (legisladores** lista){
         legisladores *aux = *lista;
         while(aux != NULL){
             printf("%s\n", aux->nombre);
-            *lista = (*lista)->siguiente;
             aux = aux->siguiente;
         }
     }
 }
 
 void votacion (legisladores** chicos_buenos, legisladores** chicos_malos, char nombre[], char voto){
-    if((voto == 'F') && (miembro(nombre, chicos_buenos) == false)){
+    if((voto == 'F') && (miembro(nombre, chicos_buenos) == 0)){
         inserta(nombre, chicos_buenos);
     }
-    else if((voto == 'D') && (miembro(nombre, chicos_malos) == false)){
-        inserta(nombre, chicos_malos);
-    }
-    if ((voto == 'F') && (miembro(nombre, chicos_malos) == true)){
+    if((voto == 'F') && (miembro(nombre, chicos_malos) == 1)){
         suprimir(nombre, chicos_malos);
     }
-    else if ((voto == 'D') && (miembro(nombre, chicos_buenos) == true)){
+    if((voto == 'D') && (miembro(nombre, chicos_malos) == 0)){
+        inserta(nombre, chicos_malos);
+    }
+    if((voto == 'D') && (miembro(nombre, chicos_buenos) == 1)){
         suprimir(nombre, chicos_buenos);
     }
 }

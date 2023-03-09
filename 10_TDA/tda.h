@@ -1,7 +1,6 @@
 /* tda.h */
 
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -16,7 +15,7 @@ void inserta (char [], legisladores**);
 
 void suprimir (char [], legisladores**);
 
-bool miembro (char [], legisladores**);
+int miembro (char [], legisladores**);
 
 void mostrar (legisladores**);
 
