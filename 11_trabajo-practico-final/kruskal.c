@@ -4,8 +4,8 @@
 
 int main()
 {
-    int M_Costos[VERTICES][VERTICES];
-    rama *arbol;
+    int M_Costos[VERTICES][VERTICES]; // Matriz de costos
+    rama *arbol;                    // Arbol de ramas
 
     for (int i = 0; i < VERTICES - 1; i++)
     {
@@ -22,7 +22,7 @@ int main()
         {
             if (M_Costos[i][j] != 0)
             {
-                inserta(i, j, M_Costos[i][j], &arbol);
+                inserta(i, j, M_Costos[i][j], &arbol); // Inserta arista en el arbol
             }
         }
     }
