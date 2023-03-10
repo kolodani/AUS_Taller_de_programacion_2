@@ -1,203 +1,47 @@
-/* kruskal.h */
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-typedef int tipo_nombre;
-typedef int tipo_elemento;
-typedef int vertice;
 
 #define VERTICES 5
+#define NIL 0
+
+typedef int vertice;
+typedef int tipo_nombre;
 
 typedef struct _ARISTA{
-    vertice u;
-    vertice v;
+    vertice vertice_u;
+    vertice vertice_v;
     int costo;
     struct _ARISTA *sig;
 }arista;
 
-typedef struct _RAMA{
-    struct _ARISTA a;
-    struct _RAMA *sig;
-}rama;
-
-typedef struct _ENCABEZADO {
-    int cuenta;
-    int primer_elemento;
+typedef struct _ENCABEZADO{ //encabezado es el "comienzo" del conjunto
+    int cuenta;            //cuenta es la cantidad de vertices que "absorbio" un conjunto
+    int primer_elemento;   //los primeros elementos de los conjuntos se pondran en 0 cuando el conjunto sea "absorbido"
 }encabezado;
 
 typedef struct _NOMBRE{
-    tipo_nombre nombre_conjunto;
-    int siguiente_elemento;
+    tipo_nombre nombre_conjunto; //nombre del conjunto al que pertenece el vertice, cambiara al conjunto que lo absorba
+    // Si ambos vertices de un lado pertenecen al mismo conjunto, no tomo en cuenta el lado
+    int siguiente_elemento;      //
 }nombre;
 
-typedef struct _CONJUNTO_CE{
-    nombre nombres[VERTICES];
-    encabezado encabezamientos_conjunto[VERTICES];
-}conjunto_ce;
+// Si se recibe un lado (x-y,w) con w siendo el peso del mismo.
+// Para nombre x: El nombre_conjunto de x seguira intacto. El siguiente_elemento de x sera y
+// Para nombre y: El nombre_conjunto de y sera el de x. El siguiente_elemento de y seguira intacto.
 
-void inicial(tipo_nombre, tipo_elemento, conjunto_ce *); //listo
-void combina(tipo_nombre, tipo_nombre, conjunto_ce *); // listo
-tipo_nombre encuentra(int , conjunto_ce *); //listo
-void kruskal(rama*);
+// conjunto combina encuentra = disjoint-set data structure
 
-void inserta(int, int, int, rama **); //listo
-arista* sacar_min(rama **); //listo
-void lista(rama *); //listo
+typedef struct _CONJUNTO_CE{ // conjunto combina-encuentra, las operaciones son en este conjunto
+    nombre nombres[VERTICES]; //nombre de cada conjunto al que pertenece el vertice, [v]
+    encabezado encabezamientos[VERTICES]; // array con los miembros del conjunto combina-encuentra
+}conjunto_CE;
 
-tipo_nombre encuentra(int x, conjunto_ce *ce)
-{
-    tipo_nombre y = x;
-    while (ce->nombres[y].nombre_conjunto != y)
-    {
-        y = ce->nombres[y].nombre_conjunto;
-    }
-    return y;
-}
+void inicial(tipo_nombre, conjunto_CE*); // nombre de un componente que pertenece al conjunto ce que inicialmente tiene al vertice tipo_elemento
+void combina(tipo_nombre,tipo_nombre,conjunto_CE*); //combina las componentes conexas de un grafo
+tipo_nombre encuentra(vertice,conjunto_CE*);
+void kruskal(arista**);
 
-void lista(rama *arbol)
-{
-    if (!arbol)
-    {
-        printf("No hay aristas en el arbol");
-    }
-    else
-    {
-        printf("(%d - %d , %d) |", arbol->a.u, arbol->a.v, arbol->a.costo);
-        lista(arbol->sig);
-    }
-}
+void inserta(vertice,vertice,int,arista**);
+arista *sacar_min(arista**);
+void lista(arista*);
 
-void inicial(tipo_nombre x, tipo_elemento y, conjunto_ce *ce)
-{
-    ce->nombres[y].nombre_conjunto = x;
-    ce->nombres[y].siguiente_elemento = 0;
-    ce->encabezamientos_conjunto[x].cuenta = 1;
-    ce->encabezamientos_conjunto[x].primer_elemento = y;
-}
-
-void inserta(int u, int v, int costo, rama **arbol)
-{
-    rama *nuevo = (rama *)malloc(sizeof(rama));
-    nuevo->a.u = u;
-    nuevo->a.v = v;
-    nuevo->a.costo = costo;
-    nuevo->sig = NULL;
-
-    if (!*arbol)
-    {
-        *arbol = nuevo;
-        return;
-    }
-    nuevo->sig = *arbol;
-    *arbol = nuevo;
-}
-
-arista *sacar_min(rama **arbol)
-{
-    rama *aux = *arbol;
-    rama *min = *arbol;
-    rama *prev = NULL;
-    rama *prev_min = NULL;
-
-    if (!*arbol)
-    {
-        printf("No hay aristas en el arbol");
-        return NULL;
-    }
-    while (aux)
-    {
-        if (aux->a.costo < min->a.costo)
-        {
-            min = aux;
-            prev_min = prev;
-        }
-        prev = aux;
-        aux = aux->sig;
-    }
-    if (prev_min)
-    {
-        prev_min->sig = min->sig;
-    }
-    else
-    {
-        *arbol = min->sig;
-    }
-    return &min->a;
-}
-
-void combina(tipo_nombre x, tipo_nombre y, conjunto_ce *ce)
-{
-    int aux, i;
-    if (ce->encabezamientos_conjunto[x].cuenta > ce->encabezamientos_conjunto[y].cuenta)
-    {
-        i = ce->encabezamientos_conjunto[y].primer_elemento;
-        while (ce->nombres[i].siguiente_elemento != 0)
-        {
-            ce->nombres[i].nombre_conjunto = x;
-            i = ce->nombres[i].siguiente_elemento;
-        }
-        ce->nombres[i].nombre_conjunto = x;
-        ce->nombres[i].siguiente_elemento = ce->encabezamientos_conjunto[x].primer_elemento;
-        ce->encabezamientos_conjunto[x].primer_elemento = ce->encabezamientos_conjunto[y].primer_elemento;
-        ce->encabezamientos_conjunto[x].cuenta += ce->encabezamientos_conjunto[y].cuenta;
-        ce->encabezamientos_conjunto[y].cuenta = 0;
-    }
-    else
-    {
-        i = ce->encabezamientos_conjunto[x].primer_elemento;
-        while (ce->nombres[i].siguiente_elemento != 0)
-        {
-            ce->nombres[i].nombre_conjunto = y;
-            i = ce->nombres[i].siguiente_elemento;
-        }
-        ce->nombres[i].nombre_conjunto = y;
-        ce->nombres[i].siguiente_elemento = ce->encabezamientos_conjunto[y].primer_elemento;
-        ce->encabezamientos_conjunto[y].primer_elemento = ce->encabezamientos_conjunto[x].primer_elemento;
-        ce->encabezamientos_conjunto[y].cuenta += ce->encabezamientos_conjunto[x].cuenta;
-        ce->encabezamientos_conjunto[x].cuenta = 0;
-    }
-}
-
-void kruskal(rama *arbol)
-{
-    int componentes = VERTICES, i;
-    arista *arbol_minimo = NULL, *arista_minima;
-    conjunto_ce ce;
-    vertice x, y;
-    tipo_nombre x_nombre, y_nombre;
-
-    if (!arbol)
-    {
-        printf("No hay aristas en el arbol");
-        return;
-    }
-    for (i = 0; i < VERTICES; i++)
-    {
-        inicial(i, i, &ce);
-    }
-    while (componentes > 1)
-    {
-        arista_minima = sacar_min(&arbol);
-        x = arista_minima->u;
-        y = arista_minima->v;
-        x_nombre = encuentra(x, &ce);
-        y_nombre = encuentra(y, &ce);
-        if (x_nombre != y_nombre)
-        {
-            combina(x_nombre, y_nombre, &ce);
-            arista_minima->sig = arbol_minimo;
-            arbol_minimo = arista_minima;
-            componentes--;
-        }
-        else
-        {
-            if (arista_minima)
-            {
-                free(arista_minima);
-            }
-        }
-    }
-    lista(arbol_minimo);
-}
