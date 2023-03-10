@@ -1,17 +1,20 @@
 #include "kruskal.h"
 
-int main(){
+int main()
+{
     int M_Costos[VERTICES][VERTICES]; // matriz con los pesos
-    arista *cola = NULL; // cola de prioridad
-    int i,j;
+    arista *cola = NULL;              // cola de prioridad
+    int i, j;
 
-    for(i = 0; i < VERTICES; i++){ //diagonal superior
-        for(j = i+1; j < VERTICES; j++){
-            printf("\nIngrese el costo de lado entre vertices %d y %d: ",i,j);
-            scanf("%d",&M_Costos[i][j]);
+    for (i = 0; i < VERTICES; i++) // diagonal superior
+    {
+        for (j = i + 1; j < VERTICES; j++)
+        {
+            printf("\nIngrese el costo de lado entre vertices %d y %d: ", i, j);
+            scanf("%d", &M_Costos[i][j]);
 
-            if(M_Costos[i][j])
-                inserta(i,j,M_Costos[i][j], &cola); //inserta en cola de prioridad
+            if (M_Costos[i][j])
+                inserta(i, j, M_Costos[i][j], &cola); // inserta en cola de prioridad
         }
     }
 
@@ -20,7 +23,8 @@ int main(){
 }
 
 void inserta(vertice v1, vertice v2, int nuevo_costo, arista **cola)
-{ // agrega una arista a la cola
+{
+    // agrega una arista a la cola de prioridad
     arista *nueva_arista = malloc(sizeof(arista));
     nueva_arista->vertice_u = v1;
     nueva_arista->vertice_v = v2;
@@ -41,17 +45,17 @@ arista *sacar_min(arista **cola)
     int min;
     arista *pivot;
     arista *menor_arista;
-    if (!*cola)
-    { // si la cola esta vacia
+    if (!*cola) // si la cola esta vacia
+    {
         printf("No hay aristas disponibles\n");
         return NULL;
     }
-    // inicializo
+    /* inicializo */
     menor_arista = *cola;
     min = menor_arista->costo;
     pivot = menor_arista;
 
-    // encuentro la menor arista
+    /* encuentro la menor arista */
     while (pivot)
     {
         if (pivot->costo < min)
@@ -63,7 +67,8 @@ arista *sacar_min(arista **cola)
     }
 
     if (*cola == menor_arista)
-    { // si la primer arista de la cola es la menor, apunto la cabeza de la cola al siguiente elemento
+    {
+        // si la primer arista de la cola es la menor, apunto la cabeza de la cola al siguiente elemento
         *cola = menor_arista->sig;
         return menor_arista;
     }
@@ -77,7 +82,8 @@ arista *sacar_min(arista **cola)
 }
 
 void inicial(tipo_nombre a, conjunto_CE *ce)
-{ // nombre de un componente que pertenece al conjunto ce que inicialmente tiene al vertice tipo_elemento
+{
+    // nombre de un componente que pertenece al conjunto ce que inicialmente tiene al vertice tipo_elemento
     ce->nombres[a].nombre_conjunto = a;
     ce->nombres[a].siguiente_elemento = NIL;    // no posee siguiente elemento
     ce->encabezamientos[a].primer_elemento = a; // el primer elemento de un componente conexo es el mismo
@@ -85,10 +91,12 @@ void inicial(tipo_nombre a, conjunto_CE *ce)
 }
 
 void combina(tipo_nombre a, tipo_nombre b, conjunto_CE *ce)
-{ // a y b son los conjuntos
+{
+    // a y b son los conjuntos
     int i;
     if (ce->encabezamientos[a].cuenta > ce->encabezamientos[b].cuenta)
-    {                                               // si A es el conjunto mas grande, combinar B en A
+    {
+        // si A es el conjunto mas grande, combinar B en A
         i = ce->encabezamientos[b].primer_elemento; // primer elemento del conjunto B
         while (ce->nombres[i].siguiente_elemento != NIL)
         {
@@ -121,6 +129,7 @@ void combina(tipo_nombre a, tipo_nombre b, conjunto_CE *ce)
         ce->encabezamientos[a].cuenta = 0;
     }
 }
+
 void lista(arista *cola)
 {
     if (!cola)
