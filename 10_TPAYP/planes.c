@@ -25,6 +25,7 @@ int main()
     return 0;
 }
 
+// con las funciones parseo y parseoInvertido lo que hago es cambiar los guiones por espacios y viceversa
 void parseo(char *linea)
 {
     int i = 0;
