@@ -7,7 +7,7 @@ int main()
     char linea[GRANDE];
     FILE *personas = fopen("personas.txt", "r");
     FILE *tabla_planes = fopen("plan.txt", "r");
-    FILE *personas_actualizado = fopen("personas-plan.txt", "w");
+    FILE *personasPlan = fopen("personas-plan.txt", "w");
 
     while (fscanf(personas, "%s", linea) != EOF)
     {
@@ -15,12 +15,12 @@ int main()
         sscanf(linea, "%*s %*s %d %d %s", &edad, &meses_socio, plan);
         parseoInvertido(linea);
         total = totales(tabla_planes, plan, edad, meses_socio);
-        fprintf(personas_actualizado, "%s-%d\n", linea, total);
+        fprintf(personasPlan, "%s-%d\n", linea, total);
     }
 
     fclose(personas);
     fclose(tabla_planes);
-    fclose(personas_actualizado);
+    fclose(personasPlan);
 
     return 0;
 }
