@@ -22,114 +22,129 @@ int main()
     return 0;
 }
 
-void inserta(vertice v1, vertice v2, int nuevo_costo, arista **cola)
+//*************************************************************************************************************
+//* INSERTA
+//*************************************************************************************************************
+void inserta(vertice vi, vertice vj, int nuevo_costo, arista **cola)
 {
     // agrega una arista a la cola de prioridad
-    arista *nueva_arista = malloc(sizeof(arista));
-    nueva_arista->vertice_u = v1;
-    nueva_arista->vertice_v = v2;
-    nueva_arista->costo = nuevo_costo;
-    nueva_arista->sig = NULL;
+    arista *aristaNueva = malloc(sizeof(arista));
+    aristaNueva->vertice_u = vi;
+    aristaNueva->vertice_v = vj;
+    aristaNueva->costo = nuevo_costo;
+    aristaNueva->sig = NULL;
 
     if (!*cola)
     {
-        *cola = nueva_arista;
+        *cola = aristaNueva;
         return;
     }
-    nueva_arista->sig = *cola;
-    *cola = nueva_arista;
+    aristaNueva->sig = *cola;
+    *cola = aristaNueva;
 }
 
+//*************************************************************************************************************
+//* SACAR_MIN
+//*************************************************************************************************************
 arista *sacar_min(arista **cola)
 {
     int min;
-    arista *pivot;
-    arista *menor_arista;
+    arista *aux;
+    arista *aristaMenor;
     if (!*cola) // si la cola esta vacia
     {
         printf("No hay aristas disponibles\n");
         return NULL;
     }
     /* inicializo */
-    menor_arista = *cola;
-    min = menor_arista->costo;
-    pivot = menor_arista;
+    aristaMenor = *cola;
+    min = aristaMenor->costo;
+    aux = aristaMenor;
 
     /* encuentro la menor arista */
-    while (pivot)
+    while (aux)
     {
-        if (pivot->costo < min)
+        if (aux->costo < min)
         {
-            menor_arista = pivot;
-            min = menor_arista->costo;
+            aristaMenor = aux;
+            min = aristaMenor->costo;
         }
-        pivot = pivot->sig;
+        aux = aux->sig;
     }
 
-    if (*cola == menor_arista)
+    if (*cola == aristaMenor)
     {
         // si la primer arista de la cola es la menor, apunto la cabeza de la cola al siguiente elemento
-        *cola = menor_arista->sig;
-        return menor_arista;
+        *cola = aristaMenor->sig;
+        return aristaMenor;
     }
     // encuentro la arista previa a la menor, vuelvo a atravesar la cola
-    pivot = *cola;
-    while (pivot->sig != menor_arista)
-        pivot = pivot->sig;
+    aux = *cola;
+    while (aux->sig != aristaMenor)
+        aux = aux->sig;
 
-    pivot->sig = pivot->sig->sig; // apunto a la arista previa con la siguiente de la siguiente
-    return menor_arista;
+    aux->sig = aux->sig->sig; // apunto a la arista previa con la siguiente de la siguiente
+    return aristaMenor;
 }
 
-void inicial(tipo_nombre a, conjunto_CE *ce)
+//*************************************************************************************************************
+//* INICIAL
+//*************************************************************************************************************
+void inicial(tipo_nombre x, conjunto_CE *ce)
 {
     // nombre de un componente que pertenece al conjunto ce que inicialmente tiene al vertice tipo_elemento
-    ce->nombres[a].nombre_conjunto = a;
-    ce->nombres[a].siguiente_elemento = NIL;    // no posee siguiente elemento
-    ce->encabezamientos[a].primer_elemento = a; // el primer elemento de un componente conexo es el mismo
-    ce->encabezamientos[a].cuenta = 1;          // cada elemento comienza con
+    ce->nombres[x].nombre_conjunto = x;
+    ce->nombres[x].siguiente_elemento = NIL;    // no posee siguiente elemento
+    ce->encabezamientos[x].primer_elemento = x; // el primer elemento de un componente conexo es el mismo
+    ce->encabezamientos[x].cuenta = 1;          // cada elemento comienza con
 }
 
-void combina(tipo_nombre a, tipo_nombre b, conjunto_CE *ce)
+//*************************************************************************************************************
+//* COMBINA
+//*************************************************************************************************************
+void combina(tipo_nombre x, tipo_nombre y, conjunto_CE *ce)
 {
-    // a y b son los conjuntos
+    // a y y son los conjuntos
     int i;
-    if (ce->encabezamientos[a].cuenta > ce->encabezamientos[b].cuenta)
+    if (ce->encabezamientos[x].cuenta > ce->encabezamientos[y].cuenta)
     {
         // si A es el conjunto mas grande, combinar B en A
-        i = ce->encabezamientos[b].primer_elemento; // primer elemento del conjunto B
+        i = ce->encabezamientos[y].primer_elemento; // primer elemento del conjunto B
         while (ce->nombres[i].siguiente_elemento != NIL)
         {
-            ce->nombres[i].nombre_conjunto = a; // nombre del conjunto que contiene a i pasa a ser a
+            ce->nombres[i].nombre_conjunto = x; // nombre del conjunto que contiene a i pasa a ser a
             i = ce->nombres[i].siguiente_elemento;
         }
         // i ahora es igual al ultimo elemento del conjunto B (ahora unido con A)
-        ce->nombres[i].nombre_conjunto = a;
-        ce->nombres[i].siguiente_elemento = ce->encabezamientos[a].primer_elemento;
-        ce->encabezamientos[a].primer_elemento = ce->encabezamientos[b].primer_elemento;
-        ce->encabezamientos[a].cuenta += ce->encabezamientos[b].cuenta;
+        ce->nombres[i].nombre_conjunto = x;
+        ce->nombres[i].siguiente_elemento = ce->encabezamientos[x].primer_elemento;
+        ce->encabezamientos[x].primer_elemento = ce->encabezamientos[y].primer_elemento;
+        ce->encabezamientos[x].cuenta += ce->encabezamientos[y].cuenta;
 
-        ce->encabezamientos[b].cuenta = 0;
+        ce->encabezamientos[y].cuenta = 0;
     }
     else
     {
-        i = ce->encabezamientos[a].primer_elemento;
+        i = ce->encabezamientos[x].primer_elemento;
         while (ce->nombres[i].siguiente_elemento != NIL)
         {
-            ce->nombres[i].nombre_conjunto = a; // nombre del conjunto que contiene a i pasa a ser a
+            ce->nombres[i].nombre_conjunto = x; // nombre del conjunto que contiene a i pasa a ser a
             i = ce->nombres[i].siguiente_elemento;
         }
 
         // i ahora es igual al ultimo elemento del conjunto A (ahora unido con B)
-        ce->nombres[i].nombre_conjunto = b;
-        ce->nombres[i].siguiente_elemento = ce->encabezamientos[b].primer_elemento;
-        ce->encabezamientos[b].primer_elemento = ce->encabezamientos[a].primer_elemento;
-        ce->encabezamientos[b].cuenta += ce->encabezamientos[a].cuenta;
+        ce->nombres[i].nombre_conjunto = y;
+        ce->nombres[i].siguiente_elemento = ce->encabezamientos[y].primer_elemento;
+        ce->encabezamientos[y].primer_elemento = ce->encabezamientos[x].primer_elemento;
+        ce->encabezamientos[y].cuenta += ce->encabezamientos[x].cuenta;
 
-        ce->encabezamientos[a].cuenta = 0;
+        ce->encabezamientos[x].cuenta = 0;
     }
 }
 
+//*************************************************************************************************************
+//* LISTA
+//*************************************************************************************************************
 void lista(arista *cola)
 {
     if (!cola)
@@ -137,22 +152,28 @@ void lista(arista *cola)
         printf("\n");
         return;
     }
-    printf("(%d-%d,%d) | ", cola->vertice_u, cola->vertice_v, cola->costo);
+    printf("(%d-%d,%d)\n", cola->vertice_u, cola->vertice_v, cola->costo);
     lista(cola->sig);
 }
 
-tipo_nombre encuentra(vertice v1, conjunto_CE *ce)
+//*************************************************************************************************************
+//* ENCUENTRA
+//*************************************************************************************************************
+tipo_nombre encuentra(vertice vi, conjunto_CE *ce)
 {
-    return ce->nombres[v1].nombre_conjunto;
+    return ce->nombres[vi].nombre_conjunto;
 }
 
+//*************************************************************************************************************
+//* KRUSKAL
+//*************************************************************************************************************
 void kruskal(arista **cola)
 {
     int numero_componentes = VERTICES, i;
-    arista *arbol = NULL, *menor_arista;
-    conjunto_CE combina_encuentra;
-    vertice v1, v2;
-    tipo_nombre componente1, componente2;
+    arista *arbol = NULL, *aristaMenor;
+    conjunto_CE combinaYencuentra;
+    vertice vi, vj;
+    tipo_nombre componenteX, componenteY;
 
     if (!*cola)
     {
@@ -161,26 +182,26 @@ void kruskal(arista **cola)
     }
 
     for (i = 0; i < VERTICES; i++)
-        inicial(i, &combina_encuentra); // incializo el conjunto combina-encuentra
+        inicial(i, &combinaYencuentra); // incializo el conjunto combina-encuentra
 
     while (numero_componentes > 1)
     {
-        menor_arista = sacar_min(cola);
-        v1 = menor_arista->vertice_u; // vertice de cada arista
-        v2 = menor_arista->vertice_v;
-        componente1 = encuentra(v1, &combina_encuentra);
-        componente2 = encuentra(v2, &combina_encuentra);
-        if (componente1 != componente2)
+        aristaMenor = sacar_min(cola);
+        vi = aristaMenor->vertice_u; // vertice de cada arista
+        vj = aristaMenor->vertice_v;
+        componenteX = encuentra(vi, &combinaYencuentra);
+        componenteY = encuentra(vj, &combinaYencuentra);
+        if (componenteX != componenteY)
         {                                        // si las componentes son disconexas, entonces
-            combina(v1, v2, &combina_encuentra); // combino las componentes
-            menor_arista->sig = arbol;           // agrego la arista al arbol abarcador de menor costo
-            arbol = menor_arista;
+            combina(vi, vj, &combinaYencuentra); // combino las componentes
+            aristaMenor->sig = arbol;           // agrego la arista al arbol abarcador de menor costo
+            arbol = aristaMenor;
             numero_componentes--; // una componente seguro fue combinada con otra si la arista juntaba dos componentes disconexas, por eso tengo una menos
         }
         else
         {
-            if (menor_arista)
-                free(menor_arista); // descarto la arista si estuvo en un primer momento
+            if (aristaMenor)
+                free(aristaMenor); // descarto la arista si estuvo en un primer momento
         }
     }
     lista(arbol);

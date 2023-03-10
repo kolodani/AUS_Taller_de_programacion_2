@@ -49,6 +49,7 @@ typedef struct _NOMBRE{
  * nombres es el nombre de cada conjunto al que pertenece el vertice, [v]
  * encabezamientos es un array con los miembros del conjunto combina-encuentra
  */
+
 typedef struct _CONJUNTO_CE{
     nombre nombres[VERTICES];
     encabezado encabezamientos[VERTICES];
